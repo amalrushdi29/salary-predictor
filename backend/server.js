@@ -18,6 +18,10 @@ app.get('/', (req, res) => {
   res.json({ message: 'IT Salary Predictor API is running! 🚀' })
 })
 
+// Routes
+import predictionRoutes from './routes/predictionRoutes.js'
+app.use('/api/predict', predictionRoutes)
+
 // Connect to MongoDB and start server
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {

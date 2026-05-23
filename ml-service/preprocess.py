@@ -27,7 +27,16 @@ df['job_title'] = df['job_title'].apply(
     lambda x: x if x in top_jobs else 'Other'
 )
 
-# ── Step 5: Group locations into regions ─────────────────────
+# ── Step 5: Map experience level to a number (ordinal encoding) ──
+experience_map = {
+    'Entry-level':     1,
+    'Mid-level':       2,
+    'Senior-level':    3,
+    'Executive-level': 4
+}
+df['experience_level'] = df['experience_level'].map(experience_map)
+
+# ── Step 6: Group locations into regions ─────────────────────
 region_map = {
     'United States': 'North America',
     'Canada': 'North America',
@@ -88,18 +97,18 @@ region_map = {
 }
 df['company_location'] = df['company_location'].map(region_map).fillna('Other')
 
-# ── Step 6: Separate features and target ─────────────────────
+# ── Step 7: Separate features and target ─────────────────────
 X = df.drop(columns=['salary_in_usd'])  # features (inputs)
 y = df['salary_in_usd']                 # target (what we predict)
 
-# ── Step 7: Train/Test Split ──────────────────────────────────
+# ── Step 8: Train/Test Split ──────────────────────────────────
 X_train, X_test, y_train, y_test = train_test_split(
     X, y,
-    test_size=0.2,      # 20% for testing
-    random_state=42     # makes the split consistent every time
+    test_size=0.2,
+    random_state=42
 )
 
-# ── Step 8: Save all four splits ──────────────────────────────
+# ── Step 9: Save all four splits ──────────────────────────────
 X_train.to_csv('data/X_train.csv', index=False)
 X_test.to_csv('data/X_test.csv', index=False)
 y_train.to_csv('data/y_train.csv', index=False)
