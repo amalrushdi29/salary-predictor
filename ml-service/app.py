@@ -24,9 +24,10 @@ def predict():
     try:
         data = request.get_json()
 
-        # Extract inputs from the request body
+        experience_map = { "EN": 1, "MI": 2, "SE": 3, "EX": 4 }
+        
         job_title         = data["job_title"]
-        experience_level  = int(data["experience_level"])
+        experience_level  = experience_map[data["experience_level"]]
         work_models       = data["work_models"]
         company_location  = data["company_location"]
         company_size      = data["company_size"]
